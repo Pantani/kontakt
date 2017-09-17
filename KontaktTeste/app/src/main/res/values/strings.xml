@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">KontaktTeste</string>
+    <string name="permission_never" translatable="false">OpsO! To execute this action you need to aceppt permission %s.\nIt\`s simple, go to device settings, and \"permissions\".</string>
+    <string name="permission_configurations">Settings</string>
+    <string name="dialog_button_ok_got_it">OK, Got it!</string>
+    <string name="permission_never_cancel">Not now!</string>
+    <string name="sign_exit">Cancel</string>
+
+    <string name="permission_title_location">localização</string>
+    <string name="permission_name_location">Local</string>
+    <string name="permission_rationale_location">Precisamos desse localização para poder encontrar seus Beacons.</string>
+</resources>
