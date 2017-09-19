@@ -85,11 +85,17 @@ public class KontaktActivity extends AppCompatActivity {
         proximityManager.setSpaceListener(createSpaceListener());
 
         //filtrar os beacons pelo beacon que você deseja
+//        List<IBeaconFilter> filterList = Arrays.asList(
+//                IBeaconFilters.newProximityUUIDFilter(UUID.fromString("f7826da6-4fa2-4e98-8024-bc5b71e0893e")),
+//                IBeaconFilters.newMajorFilter(43),
+//                IBeaconFilters.newMinorFilter(34)
+//        );
+
+        //filtrar os beacons pelo beacon que você deseja
         List<IBeaconFilter> filterList = Arrays.asList(
-                IBeaconFilters.newProximityUUIDFilter(UUID.fromString("f7826da6-4fa2-4e98-8024-bc5b71e0893e")),
-                IBeaconFilters.newMajorFilter(43),
-                IBeaconFilters.newMinorFilter(34)
+                (IBeaconFilter) IBeaconFilters.newProximityUUIDFilter(UUID.fromString("f7826da6-4fa2-4e98-8024-bc5b71e0893e"))
         );
+
         proximityManager.filters().iBeaconFilters(filterList);
     }
 
