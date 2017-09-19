@@ -45,6 +45,7 @@ public class MainActivity extends AppCompatActivity implements PermissionManager
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        requesBluetoothPermission();
         requestLocationPermission();
     }
 
@@ -81,7 +82,17 @@ public class MainActivity extends AppCompatActivity implements PermissionManager
 
         permissionManager.requestPermission(getString(R.string.permission_title_location),
                 getString(R.string.permission_name_location),
-                getString(R.string.permission_rationale_location), false, this);
+                getString(R.string.permission_rationale_location), true, this);
+    }
+
+    private void requesBluetoothPermission() {
+        if (permissionManager == null) {
+            permissionManager = new PermissionManager(this, new String[]{Manifest.permission.BLUETOOTH});
+        }
+
+        permissionManager.requestPermission(getString(R.string.permission_title_bluetooth),
+                getString(R.string.permission_name_bluetooth),
+                getString(R.string.permission_rationale_bluetooth), true, this);
     }
 
     //================================================================================

@@ -8,5 +8,9 @@
 
     <string name="permission_title_location">localização</string>
     <string name="permission_name_location">Local</string>
-    <string name="permission_rationale_location">Precisamos desse localização para poder encontrar seus Beacons.</string>
+    <string name="permission_rationale_location">Precisamos dessa localização para poder encontrar seus Beacons.</string>
+
+    <string name="permission_title_bluetooth">bluetooth</string>
+    <string name="permission_name_bluetooth">Beacons</string>
+    <string name="permission_rationale_bluetooth">Precisamos para poder encontrar seus Beacons.</string>
 </resources>
