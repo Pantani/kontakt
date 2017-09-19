@@ -84,8 +84,8 @@ public class KontaktActivity extends AppCompatActivity {
         KontaktSDK.initialize("ngNTVltcrbnkzUAxmCPRyNvhDJXHqpjX"); //Colocar sua chave de api da kontakt aqui
 
         proximityManager = ProximityManagerFactory.create(this);
-        proximityManager.setIBeaconListener(createIBeaconListener());
-        proximityManager.setEddystoneListener(createEddystoneListener());
+        proximityManager.setIBeaconListener(createSimpleIBeaconListener());
+        proximityManager.setEddystoneListener(createSimpleEddystoneListener());
         proximityManager.setSpaceListener(createSpaceListener());
 
         //filtrar os beacons pelo beacon que você deseja
@@ -96,11 +96,11 @@ public class KontaktActivity extends AppCompatActivity {
 //        );
 
         //filtrar os beacons pelo beacon que você deseja
-        List<IBeaconFilter> filterList = Arrays.asList(
-                (IBeaconFilter) IBeaconFilters.newProximityUUIDFilter(UUID.fromString("f7826da6-4fa2-4e98-8024-bc5b71e0893e"))
-        );
+//        List<IBeaconFilter> filterList = Arrays.asList(
+//                (IBeaconFilter) IBeaconFilters.newProximityUUIDFilter(UUID.fromString("f7826da6-4fa2-4e98-8024-bc5b71e0893e"))
+//        );
 
-        proximityManager.filters().iBeaconFilters(filterList);
+//        proximityManager.filters().iBeaconFilters(filterList);
     }
 
     private void startScanning() {
