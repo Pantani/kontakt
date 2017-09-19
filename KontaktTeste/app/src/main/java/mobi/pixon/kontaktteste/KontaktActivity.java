@@ -55,7 +55,7 @@ public class KontaktActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_kontakt);
 
-        KontaktSDK.initialize("KONTAKT_API_KEY"); //Colocar sua chave de api da kontakt aqui
+        KontaktSDK.initialize("ngNTVltcrbnkzUAxmCPRyNvhDJXHqpjX"); //Colocar sua chave de api da kontakt aqui
 
         initSdk();
         startScanning();
