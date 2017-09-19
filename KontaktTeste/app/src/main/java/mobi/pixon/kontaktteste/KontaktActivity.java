@@ -54,9 +54,7 @@ public class KontaktActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_kontakt);
-
         initSdk();
-        startScanning();
     }
 
     @Override
@@ -64,7 +62,6 @@ public class KontaktActivity extends AppCompatActivity {
         super.onStart();
         startScanning();
     }
-
 
     @Override
     protected void onStop() {
