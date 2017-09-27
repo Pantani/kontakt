@@ -81,11 +81,11 @@ public class KontaktActivity extends AppCompatActivity {
     //================================================================================
 
     private void initSdk() {
-        KontaktSDK.initialize("ngNTVltcrbnkzUAxmCPRyNvhDJXHqpjX"); //Colocar sua chave de api da kontakt aqui
+        KontaktSDK.initialize("TMpXXzAVRlvuTIZYBMiwEuXUrGPZHOco");
 
         proximityManager = ProximityManagerFactory.create(this);
-        proximityManager.setIBeaconListener(createSimpleIBeaconListener());
-        proximityManager.setEddystoneListener(createSimpleEddystoneListener());
+        proximityManager.setIBeaconListener(createIBeaconListener());
+        proximityManager.setEddystoneListener(createEddystoneListener());
         proximityManager.setSpaceListener(createSpaceListener());
 
         //filtrar os beacons pelo beacon que você deseja

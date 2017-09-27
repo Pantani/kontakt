@@ -2,12 +2,24 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="mobi.pixon.kontaktteste">
 
+    <!-- used to communicate with Skyhook's servers -->
+    <uses-permission android:name="android.permission.INTERNET" />
+    <!-- enables WiFi, if disabled, for the duration of a location request -->
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+    <!-- used to obtain information about the WiFi environment -->
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <!-- used to obtain cell tower ID -->
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_UPDATES" />
+    <!-- used to access GPS location, for XPS functionality -->
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
     <uses-permission android:name="android.permission.BLUETOOTH" />
     <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
-    <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
 
     <application
         android:allowBackup="true"

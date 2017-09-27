@@ -108,7 +108,7 @@ public class PermissionManager {
         this.title = title;
 
         if (isPermissionGranted(getContext(), permissionList)) {
-            callback.onPermissionGranted();
+            callback.onPermissionGranted(this);
         } else {
             if (shouldShowPermissionRationale(permissionList)) {
                 showRationaleDialog();
@@ -176,7 +176,7 @@ public class PermissionManager {
                 rationaleDialog.setNegativeButton(R.string.permission_never_cancel, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                         dialog.dismiss();
-                        callback.onPermissionDenied();
+                        callback.onPermissionDenied(PermissionManager.this);
                     }
                 });
             }
@@ -199,13 +199,13 @@ public class PermissionManager {
      */
     public void onPermissionReceived(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         if (requestCode == REQ_PERMISSION && isPermissionGranted(getContext(), permissions)) {
-            callback.onPermissionGranted();
+            callback.onPermissionGranted(this);
         } else if (!shouldShowPermissionRationale(permissions) && (isMandatory || isRequiredByUserAction)) {
             showNeverAskAgain();
         } else if (isMandatory) {
             requestPermission(title, permissionName, rationaleMessage, true, callback);
         } else {
-            callback.onPermissionDenied();
+            callback.onPermissionDenied(this);
         }
     }
 
@@ -277,8 +277,8 @@ public class PermissionManager {
      * Callback to notify the requester if the permissions requested are granted or not.
      */
     public interface PermissionCallback {
-        void onPermissionGranted();
+        void onPermissionGranted(PermissionManager permissionManager);
 
-        void onPermissionDenied();
+        void onPermissionDenied(PermissionManager permissionManager);
     }
 }

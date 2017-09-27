@@ -36,3 +36,5 @@
 
 -keep class com.kontakt.sdk.** { *; }
 -keep interface com.kontakt.sdk.** { *; }
+
+-libraryjars libs/obfuscated
