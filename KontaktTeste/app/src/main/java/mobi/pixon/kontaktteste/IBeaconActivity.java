@@ -8,6 +8,7 @@ import android.os.RemoteException;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.widget.TextView;
 
 import org.altbeacon.beacon.BeaconConsumer;
 import org.altbeacon.beacon.BeaconManager;
@@ -15,6 +16,10 @@ import org.altbeacon.beacon.Identifier;
 import org.altbeacon.beacon.MonitorNotifier;
 import org.altbeacon.beacon.Region;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import butterknife.BindView;
 import timber.log.Timber;
 
 /**
@@ -23,10 +28,15 @@ import timber.log.Timber;
 
 public class IBeaconActivity extends AppCompatActivity implements BeaconConsumer {
 
+    @BindView(R.id.ibeacon_lbl_status)
+    TextView lblStatus;
+
     //================================================================================
     // Variables
     //================================================================================
 
+    private final static int MAX_LOG = 3;
+    private List<String> logs = new ArrayList<>();
     private BeaconManager beaconManager;
 
     //================================================================================
@@ -50,7 +60,31 @@ public class IBeaconActivity extends AppCompatActivity implements BeaconConsumer
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        beaconManager.unbind(this);
+        if (beaconManager != null) {
+            beaconManager.unbind(this);
+        }
+    }
+
+    //================================================================================
+    // Private Methods
+    //================================================================================
+
+    private void logResponse(String log) {
+        Timber.d(log);
+        logs.add(log);
+
+        String allLog = "";
+        List<String> tempList = logs;
+
+        if (logs.size() > MAX_LOG) {
+            tempList = logs.subList(logs.size() - (MAX_LOG + 1), logs.size() - 1);
+        }
+
+        for (String text : tempList) {
+            allLog += "\n***************************\n" + text;
+        }
+        lblStatus.setText(allLog);
+
     }
 
     //================================================================================
@@ -78,17 +112,20 @@ public class IBeaconActivity extends AppCompatActivity implements BeaconConsumer
         return new MonitorNotifier() {
             @Override
             public void didEnterRegion(Region region) {
-                Timber.d("I just saw an beacon for the first time!");
+                String log = "I just saw an beacon for the first time!";
+                logResponse(log);
             }
 
             @Override
             public void didExitRegion(Region region) {
-                Timber.d("I no longer see an beacon");
+                String log = "I no longer see an beacon";
+                logResponse(log);
             }
 
             @Override
             public void didDetermineStateForRegion(int state, Region region) {
-                Timber.d("I have just switched from seeing/not seeing beacons: " + state);
+                String log = "I have just switched from seeing/not seeing beacons: " + state;
+                logResponse(log);
             }
         };
     }

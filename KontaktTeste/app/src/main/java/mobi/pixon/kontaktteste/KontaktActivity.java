@@ -1,15 +1,13 @@
 package mobi.pixon.kontaktteste;
 
-import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
+import android.widget.TextView;
 
 import com.kontakt.sdk.android.ble.connection.OnServiceReadyListener;
-import com.kontakt.sdk.android.ble.filter.ibeacon.IBeaconFilter;
-import com.kontakt.sdk.android.ble.filter.ibeacon.IBeaconFilters;
 import com.kontakt.sdk.android.ble.manager.ProximityManager;
 import com.kontakt.sdk.android.ble.manager.ProximityManagerFactory;
 import com.kontakt.sdk.android.ble.manager.listeners.EddystoneListener;
@@ -23,10 +21,11 @@ import com.kontakt.sdk.android.common.profile.IBeaconRegion;
 import com.kontakt.sdk.android.common.profile.IEddystoneDevice;
 import com.kontakt.sdk.android.common.profile.IEddystoneNamespace;
 
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import timber.log.Timber;
 
 /**
@@ -35,11 +34,16 @@ import timber.log.Timber;
 
 public class KontaktActivity extends AppCompatActivity {
 
+    @BindView(R.id.kontakt_lbl_status)
+    TextView lblStatus;
+
     //================================================================================
     // Variables
     //================================================================================
 
+    private final static int MAX_LOG = 3;
     private ProximityManager proximityManager;
+    private List<String> logs = new ArrayList<>();
 
     //================================================================================
     // Lifecycle
@@ -54,6 +58,7 @@ public class KontaktActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_kontakt);
+        ButterKnife.bind(this);
         initSdk();
     }
 
@@ -112,6 +117,24 @@ public class KontaktActivity extends AppCompatActivity {
         });
     }
 
+    private void logResponse(String log) {
+        Timber.d(log);
+        logs.add(log);
+
+        String allLog = "";
+        List<String> tempList = logs;
+
+        if (logs.size() > MAX_LOG) {
+            tempList = logs.subList(logs.size() - (MAX_LOG + 1), logs.size() - 1);
+        }
+
+        for (String text : tempList) {
+            allLog += "\n***************************\n" + text;
+        }
+        lblStatus.setText(allLog);
+
+    }
+
     //================================================================================
     // Simple Ranging & Monitoring Devices
     //================================================================================
@@ -120,8 +143,9 @@ public class KontaktActivity extends AppCompatActivity {
         return new SimpleIBeaconListener() {
             @Override
             public void onIBeaconDiscovered(IBeaconDevice ibeacon, IBeaconRegion region) {
-                Timber.d("SimpleIBeaconListener onIBeaconDiscovered: " + ibeacon.toString() +
-                        "IBeaconRegion: " + region.toString());
+                String log = "SimpleIBeaconListener onIBeaconDiscovered: " + ibeacon.toString() +
+                        "IBeaconRegion: " + region.toString();
+                logResponse(log);
             }
         };
     }
@@ -130,8 +154,9 @@ public class KontaktActivity extends AppCompatActivity {
         return new SimpleEddystoneListener() {
             @Override
             public void onEddystoneDiscovered(IEddystoneDevice eddystone, IEddystoneNamespace namespace) {
-                Timber.d("SimpleEddystoneListener onEddystoneDiscovered: " + eddystone.toString() +
-                        "IEddystoneNamespace: " + namespace.toString());
+                String log = "SimpleEddystoneListener onEddystoneDiscovered: " + eddystone.toString() +
+                        "IEddystoneNamespace: " + namespace.toString();
+                logResponse(log);
             }
         };
     }
@@ -144,20 +169,23 @@ public class KontaktActivity extends AppCompatActivity {
         return new IBeaconListener() {
             @Override
             public void onIBeaconDiscovered(IBeaconDevice iBeacon, IBeaconRegion region) {
-                Timber.d("IBeaconListener onIBeaconDiscovered: " + iBeacon.toString() +
-                        "IBeaconRegion: " + region.toString());
+                String log = "IBeaconListener onIBeaconDiscovered: " + iBeacon.toString() +
+                        "IBeaconRegion: " + region.toString();
+                logResponse(log);
             }
 
             @Override
             public void onIBeaconsUpdated(List<IBeaconDevice> iBeacons, IBeaconRegion region) {
-                Timber.d("IBeaconListener onIBeaconsUpdated: " + iBeacons +
-                        "IBeaconRegion: " + region.toString());
+                String log = "IBeaconListener onIBeaconsUpdated: " + iBeacons +
+                        "IBeaconRegion: " + region.toString();
+                logResponse(log);
             }
 
             @Override
             public void onIBeaconLost(IBeaconDevice iBeacon, IBeaconRegion region) {
-                Timber.d("IBeaconListener onIBeaconLost: " + iBeacon.toString() +
-                        "IBeaconRegion: " + region.toString());
+                String log = "IBeaconListener onIBeaconLost: " + iBeacon.toString() +
+                        "IBeaconRegion: " + region.toString();
+                logResponse(log);
             }
         };
     }
@@ -166,20 +194,23 @@ public class KontaktActivity extends AppCompatActivity {
         return new EddystoneListener() {
             @Override
             public void onEddystoneDiscovered(IEddystoneDevice eddystone, IEddystoneNamespace namespace) {
-                Timber.d("EddystoneListener onEddystoneDiscovered: " + eddystone.toString() +
-                        "IEddystoneNamespace: " + namespace.toString());
+                String log = "EddystoneListener onEddystoneDiscovered: " + eddystone.toString() +
+                        "IEddystoneNamespace: " + namespace.toString();
+                logResponse(log);
             }
 
             @Override
             public void onEddystonesUpdated(List<IEddystoneDevice> eddystones, IEddystoneNamespace namespace) {
-                Timber.d("EddystoneListener onEddystonesUpdated: " + eddystones +
-                        "IEddystoneNamespace: " + namespace.toString());
+                String log = "EddystoneListener onEddystonesUpdated: " + eddystones +
+                        "IEddystoneNamespace: " + namespace.toString();
+                logResponse(log);
             }
 
             @Override
             public void onEddystoneLost(IEddystoneDevice eddystone, IEddystoneNamespace namespace) {
-                Timber.d("EddystoneListener onEddystoneLost: " + eddystone.toString() +
-                        "IEddystoneNamespace: " + namespace.toString());
+                String log = "EddystoneListener onEddystoneLost: " + eddystone.toString() +
+                        "IEddystoneNamespace: " + namespace.toString();
+                logResponse(log);
             }
         };
     }
@@ -188,26 +219,26 @@ public class KontaktActivity extends AppCompatActivity {
         return new SpaceListener() {
             @Override
             public void onRegionEntered(IBeaconRegion region) {
-                Timber.d("SpaceListener onRegionEntered: " + region.toString());
-                //IBeacon region has been entered
+                String log = "SpaceListener onRegionEntered: " + region.toString();
+                logResponse(log);
             }
 
             @Override
             public void onRegionAbandoned(IBeaconRegion region) {
-                Timber.d("SpaceListener onRegionAbandoned: " + region.toString());
-                //IBeacon region has been abandoned
+                String log = "SpaceListener onRegionAbandoned: " + region.toString();
+                logResponse(log);
             }
 
             @Override
             public void onNamespaceEntered(IEddystoneNamespace namespace) {
-                Timber.d("SpaceListener onNamespaceEntered: " + namespace.toString());
-                //Eddystone namespace has been entered
+                String log = "SpaceListener onNamespaceEntered: " + namespace.toString();
+                logResponse(log);
             }
 
             @Override
             public void onNamespaceAbandoned(IEddystoneNamespace namespace) {
-                Timber.d("SpaceListener onNamespaceAbandoned: " + namespace.toString());
-                //Eddystone namespace has been abandoned
+                String log = "SpaceListener onNamespaceAbandoned: " + namespace.toString();
+                logResponse(log);
             }
         };
     }
