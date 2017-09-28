@@ -70,7 +70,7 @@ public class IBeaconActivity extends AppCompatActivity implements BeaconConsumer
     //================================================================================
 
     private void logResponse(String log) {
-        Timber.d(log);
+        Timber.e(log);
         logs.add(log);
 
         String allLog = "";

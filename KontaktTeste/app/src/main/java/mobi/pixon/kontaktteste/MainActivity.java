@@ -7,6 +7,7 @@ import android.os.Bundle;
 
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import timber.log.Timber;
 
 public class MainActivity extends AppCompatActivity implements PermissionManager.PermissionCallback {
 
@@ -26,6 +27,12 @@ public class MainActivity extends AppCompatActivity implements PermissionManager
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
         requestLocationPermission();
+
+        if (BuildConfig.DEBUG) {
+            Timber.plant(new Timber.DebugTree());
+        } else {
+            Timber.plant(new ProdLogTree());
+        }
     }
 
     @Override
@@ -33,6 +40,16 @@ public class MainActivity extends AppCompatActivity implements PermissionManager
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         if (permissionManager != null) {
             permissionManager.onPermissionReceived(requestCode, permissions, grantResults);
+        }
+    }
+
+    //================================================================================
+    // Private Methods
+    //================================================================================
+
+    private static class ProdLogTree extends Timber.Tree {
+        @Override
+        protected void log(int priority, String tag, String message, Throwable t) {
         }
     }
 
